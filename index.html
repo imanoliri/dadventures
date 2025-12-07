@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dadventures</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="glass-header">
+            <div class="logo">
+                <h1>Dadventures 🦸‍♂️ <span id="current-year" class="year-badge">2025</span></h1>
+                <span class="subtitle">Plan epic days with Ben</span>
+            </div>
+            <div class="controls">
+                <button id="btn-export" class="btn secondary">Export JSON</button>
+                <input type="file" id="file-import" hidden accept=".json">
+                <button id="btn-import" class="btn secondary">Import JSON</button>
+                <button id="btn-save-week-template" class="btn primary">Save Week</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-layout">
+            <!-- Sidebar: Activity Library -->
+            <aside class="sidebar glass-panel">
+                <div class="sidebar-header">
+                    <h2>Library</h2>
+                    <button id="btn-add-activity" class="btn-icon" title="Add Activity">+</button>
+                </div>
+
+                <!-- Sidebar Tabs -->
+                <div class="sidebar-tabs">
+                    <button id="tab-activities" class="tab-btn active">Activities</button>
+                    <button id="tab-routines" class="tab-btn">Routines</button>
+                    <button id="tab-templates" class="tab-btn">Templates</button>
+                </div>
+
+                <!-- Filters (Activities Only) -->
+                <div id="activity-filters" class="filters">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label>Type</label>
+                            <select id="filter-type">
+                                <option value="all">All</option>
+                                <option value="calm">Calm</option>
+                                <option value="wild">Wild</option>
+                                <option value="creative">Creative</option>
+                                <option value="outside">Outside</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Duration</label>
+                            <select id="filter-duration">
+                                <option value="all">All</option>
+                                <option value="short">Short</option>
+                                <option value="medium">Medium</option>
+                                <option value="long">Long</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label>Energy</label>
+                            <select id="filter-energy">
+                                <option value="all">All</option>
+                                <option value="low">Low (Tired)</option>
+                                <option value="medium">Normal</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Location</label>
+                            <select id="filter-location">
+                                <option value="all">All</option>
+                                <option value="home">Home</option>
+                                <option value="garden">Garden</option>
+                                <option value="park">Park</option>
+                                <option value="city">City</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lists -->
+                <div id="activity-library" class="activity-list">
+                    <!-- Activities injected here -->
+                </div>
+                <div id="routine-library" class="activity-list hidden">
+                    <!-- Routines injected here -->
+                </div>
+                <div id="template-library" class="activity-list hidden">
+                    <!-- Templates injected here -->
+                </div>
+            </aside>
+
+            <!-- Planner Area -->
+            <section class="planner glass-panel">
+                <div class="planner-header">
+                    <h2>Weekly Plan</h2>
+                    <div class="week-controls">
+                        <button id="prev-week" class="btn-small">&lt;</button>
+                        <span id="current-week-label">December 2025</span>
+                        <button id="next-week" class="btn-small">&gt;</button>
+                    </div>
+                    <button id="btn-clear-week" class="btn destructive">Clear Week</button>
+                </div>
+
+                <!-- Calendar Grid -->
+                <div class="calendar-grid">
+                    <div class="day-column" data-day="0">
+                        <div class="day-header">Mon</div>
+                        <div class="day-date">1</div>
+                        <div class="day-slots drop-zone" id="day-0"></div>
+                        <div class="day-notes">
+                            <textarea placeholder="Notes..."></textarea>
+                        </div>
+                    </div>
+                    <div class="day-column" data-day="1">
+                        <div class="day-header">Tue</div>
+                        <div class="day-date">2</div>
+                        <div class="day-slots drop-zone" id="day-1"></div>
+                        <div class="day-notes">
+                            <textarea placeholder="Notes..."></textarea>
+                        </div>
+                    </div>
+                    <div class="day-column" data-day="2">
+                        <div class="day-header">Wed</div>
+                        <div class="day-date">3</div>
+                        <div class="day-slots drop-zone" id="day-2"></div>
+                        <div class="day-notes">
+                            <textarea placeholder="Notes..."></textarea>
+                        </div>
+                    </div>
+                    <div class="day-column" data-day="3">
+                        <div class="day-header">Thu</div>
+                        <div class="day-date">4</div>
+                        <div class="day-slots drop-zone" id="day-3"></div>
+                        <div class="day-notes">
+                            <textarea placeholder="Notes..."></textarea>
+                        </div>
+                    </div>
+                    <div class="day-column" data-day="4">
+                        <div class="day-header">Fri</div>
+                        <div class="day-date">5</div>
+                        <div class="day-slots drop-zone" id="day-4"></div>
+                        <div class="day-notes">
+                            <textarea placeholder="Notes..."></textarea>
+                        </div>
+                    </div>
+                    <div class="day-column" data-day="5">
+                        <div class="day-header">Sat</div>
+                        <div class="day-date">6</div>
+                        <div class="day-slots drop-zone" id="day-5"></div>
+                        <div class="day-notes">
+                            <textarea placeholder="Notes..."></textarea>
+                        </div>
+                    </div>
+                    <div class="day-column" data-day="6">
+                        <div class="day-header">Sun</div>
+                        <div class="day-date">7</div>
+                        <div class="day-slots drop-zone" id="day-6"></div>
+                        <div class="day-notes">
+                            <textarea placeholder="Notes..."></textarea>
+                        </div>
+                    </div>
+                    <!-- Extra 'Next Time' Column -->
+                    <div class="day-column next-time-column" data-day="next">
+                        <div class="day-header">Next Time</div>
+                        <div class="day-date">Idea Box</div>
+                        <div class="day-slots drop-zone" id="day-next"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Activity Modal -->
+    <div id="activity-modal" class="modal hidden">
+        <div class="modal-content glass-panel">
+            <h3>New Activity</h3>
+            <form id="form-activity">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" required placeholder="e.g. Build a Fort">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select name="type">
+                            <option value="calm">🧠 Calm</option>
+                            <option value="wild">⚔️ Wild</option>
+                            <option value="creative">🎨 Creative</option>
+                            <option value="outside">🌳 Outside</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <select name="duration">
+                            <option value="short">Short</option>
+                            <option value="medium">Medium</option>
+                            <option value="long">Long</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Energy</label>
+                        <select name="energy">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <select name="location">
+                            <option value="home">Home</option>
+                            <option value="garden">Garden</option>
+                            <option value="park">Park</option>
+                            <option value="city">City</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="btn-cancel-activity" class="btn secondary">Cancel</button>
+                    <button type="submit" class="btn primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
